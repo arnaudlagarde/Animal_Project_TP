@@ -2,31 +2,35 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const AnimalForm = ({ onSuccess }) => {
-    const [name, setName] = useState('');
-    const [age, setAge] = useState('');
-    const [weight, setWeight] = useState('');
-    const [scientificName, setScientificName] = useState('');
-    const [species, setSpecies] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        age: '',
+        weight: '',
+        scientificName: '',
+        species: '',
+    });
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newAnimal = {
-            name,
-            age_maximum: parseInt(age),
-            average_weight: parseFloat(weight),
-            scientific_name: scientificName,
-            species,
-        };
 
         axios
-            .post('http://localhost:8000/animals/', newAnimal)
+            .post('http://localhost:8000/animals/', formData)
             .then(() => {
                 onSuccess(); // Refresh the animal list after successful addition
-                setName('');
-                setAge('');
-                setWeight('');
-                setScientificName('');
-                setSpecies('');
+                setFormData({
+                    name: '',
+                    age: '',
+                    weight: '',
+                    scientificName: '',
+                    species: '',
+                });
             })
             .catch((error) => {
                 console.error('Error adding animal:', error);
@@ -39,23 +43,23 @@ const AnimalForm = ({ onSuccess }) => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label className="form-label">Name</label>
-                    <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Age Maximum</label>
-                    <input type="number" className="form-control" value={age} onChange={(e) => setAge(e.target.value)} />
+                    <input type="number" className="form-control" name="age" value={formData.age} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Average Weight</label>
-                    <input type="number" step="0.01" className="form-control" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                    <input type="number" step="0.01" className="form-control" name="weight" value={formData.weight} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Scientific Name</label>
-                    <input type="text" className="form-control" value={scientificName} onChange={(e) => setScientificName(e.target.value)} />
+                    <input type="text" className="form-control" name="scientificName" value={formData.scientificName} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Species</label>
-                    <input type="text" className="form-control" value={species} onChange={(e) => setSpecies(e.target.value)} />
+                    <input type="text" className="form-control" name="species" value={formData.species} onChange={handleChange} />
                 </div>
                 <button type="submit" className="btn btn-primary">
                     Add Animal

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AnimalItem from './AnimalItem';
 
 const AnimalList = () => {
     const [animals, setAnimals] = useState([]);
@@ -19,28 +20,12 @@ const AnimalList = () => {
             });
     };
 
-    const handleDelete = (id) => {
-        axios
-            .delete(`http://localhost:8000/animals/${id}/`)
-            .then(() => {
-                fetchAnimals(); // Refresh the animal list after deletion
-            })
-            .catch((error) => {
-                console.error('Error deleting animal:', error);
-            });
-    };
-
     return (
         <div className="container mt-4">
             <h1 className="mb-4">Animal List</h1>
             <ul className="list-group">
                 {animals.map((animal) => (
-                    <li key={animal.id} className="list-group-item">
-                        <strong>{animal.name}</strong> - {animal.species.name} (Scientific Name: {animal.scientific_name})
-                        <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(animal.id)}>
-                            Delete
-                        </button>
-                    </li>
+                    <AnimalItem key={animal.id} animal={animal} />
                 ))}
             </ul>
         </div>
