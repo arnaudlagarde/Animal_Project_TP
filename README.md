@@ -16,43 +16,60 @@ This is a Django and React application that allows you to manage information abo
 ```bash
 git clone <repository_url>
 cd animal_project
+```
+
 
 Create and activate a virtual environment (optional but recommended):
 
+```bash
 python -m venv env
 source env/bin/activate
+```
 
 Install the Python dependencies:
 
+```bash
 pip install -r requirements.txt
+```
 
 Apply the database migrations:
-
+```bash
 python manage.py migrate
+```
 
 Create a superuser to access the Django admin interface:
-
+```bash
 python manage.py createsuperuser
+```
 
 Run the Django development server:
 
+```bash
 python manage.py runserver
+```
 
 The Django backend should now be running on http://localhost:8000/.
 
 ### Frontend (React)
 
 Change directory to the frontend:
-
+```bash
 cd animal_project/frontend/animal-frontend
+```
+
 
 Install the npm packages:
 
+```bash
 npm install
+```
+
 
 Run the React development server:
-
+```bash
 npm start
+```
+
 
 The React frontend should now be running on http://localhost:3000/.
 
