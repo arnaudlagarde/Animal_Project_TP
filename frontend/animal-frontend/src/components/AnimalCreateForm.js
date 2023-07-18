@@ -19,23 +19,40 @@ const AnimalCreateForm = ({ onSuccess }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
+        const requestData = {
+            name: formData.name,
+            age_maximum: formData.age,
+            average_weight: formData.weight,
+            scientific_name: formData.scientificName,
+            species: {
+                name: formData.species,
+            },
+        };
+    
         axios
-            .post('http://localhost:8000/animals/', formData)
+            .post('http://localhost:8000/animals/', requestData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
             .then(() => {
-                onSuccess(); // Refresh the animal list after successful addition
+                onSuccess();
                 setFormData({
                     name: '',
-                    age: '',
-                    weight: '',
+                    age: 0,
+                    weight: 0.0,
                     scientificName: '',
-                    species: '',
+                    species: {
+                        name: '',
+                    },
                 });
             })
             .catch((error) => {
                 console.error('Error adding animal:', error);
             });
     };
+    
 
     return (
         <div className="container mt-4">
