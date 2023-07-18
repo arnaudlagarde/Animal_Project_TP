@@ -41,6 +41,10 @@ Create a superuser to access the Django admin interface:
 ```bash
 python manage.py createsuperuser
 ```
+Add some animals to your database:
+```bash
+python manage.py add_animals
+```
 
 Run the Django development server:
 
