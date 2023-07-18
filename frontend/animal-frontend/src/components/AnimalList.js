@@ -6,6 +6,7 @@ import AnimalEditModal from './AnimalEditModal';
 const AnimalList = () => {
     const [animals, setAnimals] = useState([]);
     const [editingAnimalId, setEditingAnimalId] = useState(null);
+    const [sortOrder, setSortOrder] = useState('asc'); // Default sort order is ascending
 
     useEffect(() => {
         fetchAnimals();
@@ -45,11 +46,29 @@ const AnimalList = () => {
         setEditingAnimalId(null);
     };
 
+    const handleSortOrderChange = () => {
+        // Toggle the sort order between 'asc' and 'desc'
+        setSortOrder((prevSortOrder) => (prevSortOrder === 'asc' ? 'desc' : 'asc'));
+    };
+
+    // Sort the animals array based on the sort order
+    const sortedAnimals = [...animals].sort((a, b) => {
+        return sortOrder === 'asc' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name);
+    });
+
     return (
         <div className="container mt-4">
             <h1 className="mb-4">Animal List</h1>
+            <div className="d-flex justify-content-between mb-2">
+                <div>
+                    <button className="btn btn-secondary mx-2" onClick={handleSortOrderChange}>
+                        {sortOrder === 'asc' ? 'Sort A-Z' : 'Sort Z-A'}
+                    </button>
+                    <span>Total Animals: {animals.length}</span>
+                </div>
+            </div>
             <ul className="list-group">
-                {animals.map((animal) => (
+                {sortedAnimals.map((animal) => (
                     <li key={animal.id} className="list-group-item">
                         <AnimalItem animal={animal} />
                         <div className="btn-group" role="group">
