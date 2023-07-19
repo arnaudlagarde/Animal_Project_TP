@@ -43,9 +43,7 @@ const AnimalCreateForm = ({ onSuccess }) => {
                     age: 0,
                     weight: 0.0,
                     scientificName: '',
-                    species: {
-                        name: '',
-                    },
+                    species: '',
                 });
             })
             .catch((error) => {
